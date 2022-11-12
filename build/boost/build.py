@@ -40,6 +40,7 @@ class BoostBuilder:
         'graph_parallel',
         'headers',
         'iostreams',
+        'json',
         'locale',
         'log',
         'math',
@@ -130,6 +131,7 @@ class BoostBuilder:
         get default config of builder
         """
         config = SimpleNamespace()
+
         # build config
         config.whole_procedure = True
         config.do_nothing = False
@@ -137,15 +139,33 @@ class BoostBuilder:
         config.clean = False
         config.build_static = False
         config.link_static = False
-        config.toolset = 'msvc'
+        config.toolset = 'msvc-14.2'
         config.threading = 'multi'
         config.architecture = 'x86'
         config.address_model = '64'
+        # for toolset, we have
+        #  Visual Studio 2019-14.2
+        #  Visual Studio 2017-14.1
+        #  Visual Studio 2015-14.0
+        #  Visual Studio 2013-12.0
+        #  Visual Studio 2012-11.0
+        #  Visual Studio 2010-10.0
+        #  Visual Studio 2008-9.0
+        #  Visual Studio 2005-8.0
+        #  Visual Studio .NET 2003-7.1
+        #  Visual Studio .NET-7.0
+        #  Visual Studio 6.0, Service Pack 5-6.5
+        # see more:
+        # https://www.boost.org/doc/libs/1_78_0/tools/build/doc/html/index.html#bbv2.reference.tools.compiler.msvc
+
         # boost repo config
         config.repo = r"https://github.com/boostorg/boost.git"
         config.tag = r"boost-1.80.0"
         config.version = r"1.80.0"
         config.install_dir_name = f"boost-{config.version}"
+
+        # flow control
+        config.ask_before_continue = True
         return config
 
     def setup(self, args):
@@ -186,7 +206,7 @@ class BoostBuilder:
         log = self.log
 
         repo_dir = joinpath(self.script_dir, f"boost-{config.version}")
-        build_dir = joinpath(self.script_dir, 'build')
+        build_dir = joinpath(repo_dir, 'build')
         install_dir = abspath(joinpath(self.script_dir, '..', '..', config.install_dir_name))
         b2_cmd = self.__make_b2_cmd(build_dir, install_dir, config)
 
@@ -200,7 +220,7 @@ class BoostBuilder:
         log(f"b2 command: {self.__format_b2_cmd(b2_cmd)}")
         log(r"")
 
-        if not self.__confirm_and_continue():
+        if config.ask_before_continue and not self.__confirm_and_continue():
             return
 
         if config.whole_procedure:
@@ -221,6 +241,7 @@ class BoostBuilder:
         run_cmd(['git', 'checkout', config.tag])
         run_cmd(['git', 'reset', '--hard'])
         run_cmd(['git', 'submodule', 'update', '--init', '--recursive'])
+        run_cmd(['git', 'submodule', 'foreach', 'git', 'reset', '--hard'])
 
         if config.run_bootstrap or config.whole_procedure or config.clean:
             run_cmd(['bootstrap.bat'])
