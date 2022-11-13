@@ -25,3 +25,6 @@ cloud
 4. add `.repo` file(empty) for the library, e.g. `cloud/build/boost/.repo`(so that lint will ignore the folder)
 5. build the library with you build script, and install it to cloud root, e.g. `cloud/boost-1.80.0` (name rule: <library>-<full-version>)
 6. pack the library with 7z and track them in `cloud/packages`, e.g. `cloud/packages/boost-1.80.0.7z`
+
+# additional information
+1. if not specified, we build static library for default, i.e., a library is a static library if has no `-shared` postfix
