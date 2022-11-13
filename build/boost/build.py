@@ -27,45 +27,45 @@ class BoostBuilder:
     config_file = joinpath(script_dir, 'boost.json')
     log_file = joinpath(script_dir, 'build.log')
     multiple_config = [
-        'build_debug',
-        'build_static',
-        'link_static',
-        'threading',
-        'address_model',
+        "build_debug",
+        "build_static",
+        "link_static",
+        "threading",
+        "address_model",
     ]
     components = [
-        'atomic',
-        'chrono',
-        'container',
-        'context',
-        'contract',
-        'coroutine',
-        'date_time',
-        'exception',
-        'fiber',
-        'filesystem',
-        'graph',
-        'graph_parallel',
-        'headers',
-        'iostreams',
-        'json',
-        'locale',
-        'log',
-        'math',
-        'mpi',
-        'nowide',
-        'program_options',
-        # 'python',
-        'random',
-        'regex',
-        'serialization',
-        'stacktrace',
-        'system',
-        'test',
-        'thread',
-        'timer',
-        'type_erasure',
-        'wave',
+        "atomic",
+        "chrono",
+        "container",
+        "context",
+        "contract",
+        "coroutine",
+        "date_time",
+        "exception",
+        "fiber",
+        "filesystem",
+        "graph",
+        "graph_parallel",
+        "headers",
+        "iostreams",
+        "json",
+        "locale",
+        "log",
+        "math",
+        "mpi",
+        "nowide",
+        "program_options",
+        # "python",
+        "random",
+        "regex",
+        "serialization",
+        "stacktrace",
+        "system",
+        "test",
+        "thread",
+        "timer",
+        "type_erasure",
+        "wave",
     ]
 
     def __init__(self):
@@ -141,14 +141,14 @@ class BoostBuilder:
         config.clean = False
 
         # boost build config
-        config.toolset = 'msvc-14.2'
-        config.architecture = 'x86'
+        config.toolset = "msvc-14.2"
+        config.architecture = "x86"
         config.install = True
         config.build_debug = [True, False]
         config.build_static = [True, False]
         config.link_static = [True, False]
-        config.threading = ['single', 'multi']
-        config.address_model = ['32', '64']
+        config.threading = ["single", "multi"]
+        config.address_model = ["32", "64"]
 
         # for toolset, we have
         #  Visual Studio 2019-14.2
