@@ -115,9 +115,6 @@ class BoostBuilder:
         else:
             b2_cmd.append('runtime-link=shared')
 
-        for component in self.components:
-            b2_cmd.append(f'--with-{component}')
-
         if config.build_debug:
             b2_cmd.append(r'variant=debug')
         else:
@@ -125,6 +122,9 @@ class BoostBuilder:
 
         if config.install:
             b2_cmd.append(r'install')
+
+        for component in config.components:
+            b2_cmd.append(f'--with-{component}')
 
         return b2_cmd
 
@@ -149,6 +149,7 @@ class BoostBuilder:
         config.link_static = [True, False]
         config.threading = ["single", "multi"]
         config.address_model = ["32", "64"]
+        config.components = deepcopy(self.components)
 
         # for toolset, we have
         #  Visual Studio 2019-14.2
