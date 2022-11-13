@@ -139,31 +139,27 @@ class BoostBuilder:
         config.do_nothing = False
         config.run_bootstrap = False
         config.clean = False
+        config.install = True
 
         # boost build config
-        config.toolset = "msvc-14.2"
-        config.architecture = "x86"
-        config.install = True
         config.build_debug = [True, False]
         config.build_static = [True, False]
         config.link_static = [True, False]
         config.threading = ["single", "multi"]
         config.address_model = ["32", "64"]
         config.components = deepcopy(self.components)
-
+        config.architecture = "x86"
+        config.toolset = "msvc-14.2"
         # for toolset, we have
-        #  Visual Studio 2019-14.2
-        #  Visual Studio 2017-14.1
-        #  Visual Studio 2015-14.0
-        #  Visual Studio 2013-12.0
-        #  Visual Studio 2012-11.0
-        #  Visual Studio 2010-10.0
-        #  Visual Studio 2008-9.0
-        #  Visual Studio 2005-8.0
-        #  Visual Studio .NET 2003-7.1
-        #  Visual Studio .NET-7.0
-        #  Visual Studio 6.0, Service Pack 5-6.5
-        # see more:
+        #  Visual Studio 2019   >>>   msvc-14.2
+        #  Visual Studio 2017   >>>   msvc-14.1
+        #  Visual Studio 2015   >>>   msvc-14.0
+        #  Visual Studio 2013   >>>   msvc-12.0
+        #  Visual Studio 2012   >>>   msvc-11.0
+        #  Visual Studio 2010   >>>   msvc-10.0
+        #  Visual Studio 2008   >>>   msvc-9.0
+        #  Visual Studio 2005   >>>   msvc-8.0
+        # see more of b2:
         #   link: https://www.boost.org/doc/libs/1_78_0/tools/build/doc/html/index.html
         #   topics:
         #       #bbv2.reference.tools.compiler.msvc
@@ -185,9 +181,11 @@ class BoostBuilder:
         self.__load_config()
         self.__dump_config()
         config = self.config
-        if '--do-nothing' in args:
+        if '--do-nothing' in args and not config.do_nothing:
+            print(r"overwriting do_nothing cause --do-nothing specified")
             config.do_nothing = True
-        if '--whole-procedure' in args:
+        if '--whole-procedure' in args and not config.whole_procedure:
+            print(r"overwriting whole_procedure cause --whole-procedure specified")
             config.whole_procedure = True
         return self
 
