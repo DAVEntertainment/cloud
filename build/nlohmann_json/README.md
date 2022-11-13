@@ -28,6 +28,8 @@ cmake -DCMAKE_INSTALL_PREFIX=nlohmann_json-3.11.2 ..
 cmake --install .
 ```
 
+`build.cmd` is used for cloud package nlohmann_json-3.11.2
+
 ### 3. track library
 pack `nlohmann_json-<version>` with 7z to `nlohmann_json-<version>.7z`,
 move to `cloud/nlohmann_json-<version>.7z`,

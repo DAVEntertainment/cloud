@@ -1,4 +1,4 @@
-@REM need to clone https://github.com/nlohmann/json.git into nlohmann_json and checkout to version first
+@REM need to clone https://github.com/nlohmann/json.git into nlohmann_json
 
 @set STARTUP_DIR=%cd%
 @set SCRIPT_DIR=%~dp0
@@ -20,6 +20,7 @@
     @echo source dir not exists !!!
     @goto end
 )
+
 git checkout v%VERSION%
 git reset --hard
 
