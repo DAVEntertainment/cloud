@@ -4,15 +4,35 @@ cmake_minimum_required(VERSION 3.24)
 # debug lines, for more info, not affect build precudure                            #
 #####################################################################################
 set(Boost_DEBUG 1)                                                                  #
+set(Boost_VERBOSE 1)                                                                #
 # set(Boost_NO_BOOST_CMAKE 1)                                                       #
 #####################################################################################
 # debug lines, for more info, not affect build precudure                            #
 #####################################################################################
 
 
+#####################################################################################
+# boost configurations (default ones)                                               #
+#####################################################################################
+# set(Boost_USE_STATIC_LIBS ON) # use static libs or shared libs
+# set(Boost_USE_STATIC_RUNTIME OFF) # use static runtime
+# set(Boost_USE_DEBUG_RUNTIME OFF) # use debug runtime
+# set(Boost_USE_MULTITHREADED ON) # use multi-threaded libs
+# set(Boost_USE_DEBUG_LIBS OFF) # use debug libs
+
+
+#####################################################################################
+# find boost packages                                                               #
+#####################################################################################
+# we should find boost packages with find_package(boost_<lib-name> [...])
+# find_package(Boost [...]) will not find each library, only following targets found:
+#   Boost::headers      Boost::boost    Boost::diagnostic_definitions
+#   Boost::disable_autolinking          Boost::dynamic_linking
 list(APPEND CMAKE_PREFIX_PATH ${CMAKE_CURRENT_LIST_DIR}/../../../boost-1.80.0)
-find_package(Boost 1.80.0 EXACT CONFIG REQUIRED COMPONENTS headers)
-find_package(boost_chrono 1.80.0 EXACT CONFIG REQUIRED)
+# find_package(Boost 1.80.0 EXACT CONFIG REQUIRED)
+find_package(boost_headers 1.80.0 EXACT CONFIG REQUIRED)
+find_package(boost_date_time 1.80.0 EXACT CONFIG REQUIRED)
+
 
 
 #####################################################################################
@@ -47,5 +67,5 @@ add_executable(test_package main.cpp)
 target_link_libraries(test_package
     PRIVATE
         Boost::headers
-        Boost::chrono
+        Boost::date_time
 )
