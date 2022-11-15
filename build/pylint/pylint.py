@@ -82,6 +82,7 @@ def main():
 
     config = SimpleNamespace()
     config.repo_root = abspath(joinpath(dirname(__file__), '..', '..'))
+    config.packages_root = abspath(joinpath(config.repo_root, 'packages'))
 
     config.build_root = joinpath(config.repo_root, 'build')
     config.modules = []
@@ -96,6 +97,11 @@ def main():
             lint_module.depth = 9999
             print(f"found python module: {module}")
         config.modules.append(lint_module)
+
+    packages_module = SimpleNamespace()
+    packages_module.root = config.packages_root
+    packages_module.depth = 1
+    config.modules.append(packages_module)
 
     config.post_fix = ('.py', )
     config.skip_dirs = ('__pycache__', )
