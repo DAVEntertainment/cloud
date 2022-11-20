@@ -22,7 +22,8 @@ cd gtest
 mkdir .build
 cd .build
 cmake -G"Visual Studio 16 2019" -DCMAKE_INSTALL_PREFIX=gtest-1.12.1 -DCMAKE_DEBUG_POSTFIX=d -Dgtest_force_shared_crt=ON ..
-cmake --install .
+cmake --build . --config Debug -j12
+cmake --install . --config Debug
 ```
 
 `build.cmd` is used for cloud package gtest-1.12.1 and gtest-1.12.1-shared
