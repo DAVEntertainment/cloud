@@ -1,5 +1,5 @@
-# thirdparties
-thirdparties' binary for win32 x86_64 msvc2019 md
+# cloud thirdparties
+thirdparties' build
 
 # structure
 ```
