@@ -90,12 +90,12 @@ def main():
     for module in split_modules((config.build_root, )):
         lint_module = SimpleNamespace()
         lint_module.root = module
-        if existspath(joinpath(module, '.repo')):
+        if existspath(joinpath(module, '.util')):
+            lint_module.depth = 9999
+            print(f"found util module: {module}")
+        else:
             lint_module.depth = 1
             print(f"found repo module: {module}")
-        else:
-            lint_module.depth = 9999
-            print(f"found python module: {module}")
         config.modules.append(lint_module)
 
     packages_module = SimpleNamespace()
