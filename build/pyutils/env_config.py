@@ -1,6 +1,26 @@
+"""
+EnvConfig
+"""
+
+
 class EnvConfig:
     """
+    environment config
     """
+
+    toolset_shortcut_map = {
+        "Visual Studio 16 2019": "msvc16",  # based on CMake definition
+        "Visual Studio 2019": "msvc16",  # based on CMake definition
+        "Visual Studio 16": "msvc16",  # based on CMake definition
+    }
+
+    runtime_shortcut_map = {
+        "Multithreaded": "mt",
+        "Multithreaded Debug": "mtd",
+        "Multithreaded Dll": "md",
+        "Multithreaded Dll Debug": "mdd",
+    }
+
     def __init__(self):
         self.system = "Windows"
         # *Windows
@@ -28,46 +48,36 @@ class EnvConfig:
 
     @property
     def toolset_shortcut(self):
-        return ToolsetShortcut.GetShortcut(self.toolset)
+        """
+        get toolset short name
+        """
+        return self.toolset_shortcut_map.get(self.toolset, self.toolset)
 
     @property
     def runtime_shortcut(self):
-        return RuntimeShortcut.GetShortcut(self.runtime)
-
-
-
-class ToolsetShortcut:
-    shortcut_map = {
-        "Visual Studio 16 2019": "msvc16",  # based on CMake definition
-        "Visual Studio 2019": "msvc16",  # based on CMake definition
-        "Visual Studio 16": "msvc16",  # based on CMake definition
-    }
-    @classmethod
-    def GetShortcut(cls, toolset):
-        return cls.shortcut_map.get(toolset, toolset)
-
-
-class RuntimeShortcut:
-    shortcut_map = {
-        "Multithreaded": "mt",
-        "Multithreaded Debug": "mtd",
-        "Multithreaded Dll": "md",
-        "Multithreaded Dll Debug": "mdd",
-    }
-    @classmethod
-    def GetShortcut(cls, runtime):
-        return cls.shortcut_map.get(runtime, runtime)
+        """
+        get runtime  short name
+        """
+        return self.runtime_shortcut_map.get(self.runtime, self.runtime)
 
 
 class EnvNameRule:
-
+    """
+    environment name rule
+    """
     @staticmethod
-    def GetNameRule():
+    def get_name_rule():
+        """
+        get environment name rule
+        """
         return r"{sys}_{arch}_{addr_mod}_{toolset}_{runtime}"
 
     @staticmethod
-    def GetName(env_config):
-        name = EnvNameRule.GetNameRule().format(
+    def get_name(env_config):
+        """
+        get environment name from given configuration by environment name rule
+        """
+        name = EnvNameRule.get_name_rule().format(
             sys = env_config.system.lower(),
             arch = env_config.architecture,
             addr_mod = env_config.address_mode,
