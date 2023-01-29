@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.24)
 
 #####################################################################################
-# find nlomann_json packages                                                        #
+# find gflags packages                                                        #
 #####################################################################################
-list(APPEND CMAKE_PREFIX_PATH ${CMAKE_CURRENT_LIST_DIR}/../../../gflags-2.2.2)
+# list(APPEND CMAKE_PREFIX_PATH ${CMAKE_CURRENT_LIST_DIR}/../../../gflags-2.2.2)
 # find_package(GFlags 2.2.2 EXACT CONFIG REQUIRED)
 find_package(GFlags 2.2.2 EXACT CONFIG REQUIRED COMPONENTS nothreads_static)
 
