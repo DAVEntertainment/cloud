@@ -24,7 +24,7 @@
 @if not "%errorlevel%" == "0" (
     @echo source dir not exists !!!
     @echo need to run "git clone https://github.com/gflags/gflags.git gflags --branch v%VERSION%" first
-    @goto end
+    @goto error
 )
 
 git checkout v%VERSION%
@@ -48,13 +48,18 @@ cmake --build %TEST_PACKAGE_BUILD_DIR% --config Release -j10
 %TEST_PACKAGE_BUILD_DIR%\Debug\test_package.exe
 @if not "%errorlevel%" == "0" (
     @echo run test package with config Debug failed, abort!!!
-    @goto end
+    @goto error
 )
 %TEST_PACKAGE_BUILD_DIR%\Release\test_package.exe
 @if not "%errorlevel%" == "0" (
     @echo run test package with config Release failed, abort!!!
-    @goto end
+    @goto error
 )
+
+@goto end
+
+:error
+@set errorlevel=1
 
 :end
 @popd
