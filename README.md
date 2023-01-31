@@ -27,4 +27,8 @@ cloud
 6. pack the library with 7z and track them in `cloud/packages`, e.g. `cloud/packages/boost-1.80.0.7z`
 
 # additional information
-1. if not specified, we build static library for default, i.e., a library is a static library if has no `-shared` postfix
+1. if not specified, we build both static and shared library for default
+2. a library is a static library if it has a `-static` postfix
+3. a library is a shared library if it has a `-shared` postfix
+4. a library contains both static and shared libraries if no `-shared` nor `-static` specified
+5. `-release` and `-debug` are in a similar situation (just like `-shared` and `-static`)

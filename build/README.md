@@ -1,2 +1,2 @@
-# Cloud thirdparties build scripts
-This directory is reserved for the branch `build` of Cloud
+# cloud thirdparties build scripts
+this directory is reserved for the branch `build` of `cloud`
