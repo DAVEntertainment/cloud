@@ -6,9 +6,9 @@ from os.path import exists as existspath
 from os.path import join as joinpath
 from os.path import abspath, dirname
 from types import SimpleNamespace
-from build.pyutils.path_utils import glob_files
-from build.pyutils.lint_utils import split_modules
-from build.pyutils.shell_utils import run_cmd
+from cloud.path_utils import glob_files
+from cloud.lint_utils import split_modules
+from cloud.shell_utils import run_cmd
 
 
 class LintFailed(Exception):
@@ -87,6 +87,13 @@ def main():
     config.build_root = joinpath(config.repo_root, 'build')
     config.modules = []
 
+    # python utils
+    util_module = SimpleNamespace()
+    util_module.root = joinpath(config.repo_root, 'src')
+    util_module.depth = 9999
+    config.modules.append(util_module)
+
+    # build scripts
     for module in split_modules((config.build_root, )):
         lint_module = SimpleNamespace()
         lint_module.root = module
@@ -98,6 +105,7 @@ def main():
             print(f"found repo module: {module}")
         config.modules.append(lint_module)
 
+    # setup scripts
     packages_module = SimpleNamespace()
     packages_module.root = config.packages_root
     packages_module.depth = 1

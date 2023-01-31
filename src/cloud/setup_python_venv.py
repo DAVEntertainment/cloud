@@ -2,6 +2,7 @@
 setup python virtual environment path
 """
 import sys
+from sys import version_info as pyverinfo
 from platform import system
 from os.path import exists as existspath
 from os.path import join as joinpath
@@ -19,6 +20,10 @@ def get_path_file_path(env_root, path_file_name):
     """
     if system() == "Windows":
         site_package = joinpath(env_root, "Lib", "site-packages")
+    elif system() == "Linux":
+        site_package = joinpath(env_root, "lib",
+            f"python{pyverinfo.major}.{pyverinfo.minor}", "site-packages"
+        )
     else:
         print(f"system \"{system()}\" not supported")
         raise WritePathFailed(f"system \"{system()}\" not supported")
@@ -56,7 +61,7 @@ def main(args):
     entry for setup venv (.pth)
     """
     paths = [
-        abspath(joinpath(dirname(__file__), '..', '..'))
+        abspath(joinpath(dirname(__file__), '..'))
     ]
     for env_root in args:
         write_path_file(env_root, 'cloud.pth', paths)
