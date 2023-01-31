@@ -6,13 +6,30 @@ from os.path import join as joinpath
 from os.path import exists as existspath
 from os.path import abspath, dirname
 from types import SimpleNamespace
-from build.pyutils.shell_utils import run_cmd
+from subprocess import Popen
 
 
 class SetupFailed(Exception):
     """
     setup cloud failed
     """
+
+
+def run_cmd(cmd):
+    """
+    run cmd with log
+
+    signature:
+        run_cmd(cmd)
+
+    params:
+        cmd         command to execute
+    """
+    print(cmd)
+    with Popen(cmd) as proc:
+        proc.communicate()
+        print(f"return code {proc.returncode}")
+        return proc.returncode
 
 
 def setup(config):
@@ -42,7 +59,8 @@ def default_builder_config():
     config.packages_root = abspath(dirname(__file__))
     config.repo_root = abspath(joinpath(config.packages_root, '..'))
     config.extract_root = config.repo_root
-    config.tool7z = joinpath(config.packages_root, '7z.exe')
+    config.tools_root = joinpath(config.repo_root, 'tools')
+    config.tool7z = joinpath(config.tools_root, '7z-22.01.exe')
 
     return config
 
