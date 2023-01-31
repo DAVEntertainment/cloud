@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.24)
 #####################################################################################
 # find nlomann_json packages                                                        #
 #####################################################################################
-list(APPEND CMAKE_PREFIX_PATH ${CMAKE_CURRENT_LIST_DIR}/../../../nlohmann_json-3.11.2)
+# list(APPEND CMAKE_PREFIX_PATH ${CMAKE_CURRENT_LIST_DIR}/../../../nlohmann_json-3.11.2)
 find_package(nlohmann_json 3.11.2 EXACT CONFIG REQUIRED COMPONENTS nlohmann_json)
 
 #####################################################################################
